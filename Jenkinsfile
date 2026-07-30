@@ -58,7 +58,7 @@ pipeline {
             steps {
                 script {
                     
-                    withDockerRegistry(credentialsId: 'docker-cred') {
+                    withDockerRegistry(credentialsId: 'Dockerhub-cred') {
                         sh "docker push ${IMAGE_NAME}:${TAG}"
                     }
                 }
