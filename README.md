@@ -1,2 +1,2 @@
 # Blue-Green-Deployment-NodeJSAPP
-Pratica Demonstration of a Blue-Green Deployment of Application
+Pratical Demonstration of a Blue-Green Deployment of an Application  The stack used her is nodeJS ExpressJs html and CSS
