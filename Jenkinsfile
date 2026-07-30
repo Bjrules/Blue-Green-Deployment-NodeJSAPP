@@ -25,7 +25,7 @@ pipeline {
         
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv( 'sonar') {
+                withSonarQubeEnv( 'SonaQube-Server') {
                     sh "$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=nodejsmysql -Dsonar.projectName=nodejsmysql"
                 }
             }
@@ -33,7 +33,7 @@ pipeline {
         
         stage('Trivy FS Scan') {
             steps {
-                sh "trivy fs --format table -o fs.html ."
+                sh "trivy fs --format table -o File-scanned-result.html ."
             }
         }
         
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     
-                    withDockerRegistry(credentialsId: 'docker-cred') {
+                    withDockerRegistry(credentialsId: 'Dockerhub-cred') {
                         sh "docker build -t ${IMAGE_NAME}:${TAG} ."
                     }
                 }
@@ -50,7 +50,7 @@ pipeline {
         
         stage('Trivy Image Scan') {
             steps {
-                sh "trivy image --format table -o image.html ${IMAGE_NAME}:${TAG}"
+                sh "trivy image --format table -o Image-scanned-result.html ${IMAGE_NAME}:${TAG}"
             }
         }
         
