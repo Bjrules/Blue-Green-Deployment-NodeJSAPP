@@ -68,7 +68,7 @@ pipeline {
          stage('Deploy SVC-APP') {
             steps {
                 script {
-                    withKubeConfig(caCertificate: '', clusterName: 'devopsshack-cluster', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://46743932FDE6B34C74566F392E30CABA.gr7.ap-south-1.eks.amazonaws.com') {
+                    withKubeConfig(caCertificate: '', clusterName: 'bnj-cluster', contextName: '', credentialsId: 'K8s-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://9570DE9AC984BD41AF7C6419E8F49E84.gr7.us-east-1.eks.amazonaws.com') {
                 sh """ if ! kubectl get svc app -n ${KUBE_NAMESPACE}; then
                           kubectl apply -f app-service.yml -n ${KUBE_NAMESPACE}
                         fi
@@ -88,7 +88,7 @@ pipeline {
                         deploymentFile = 'app-deployment-green.yml'
                     }
 
-                    withKubeConfig(caCertificate: '', clusterName: 'devopsshack-cluster', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://46743932FDE6B34C74566F392E30CABA.gr7.ap-south-1.eks.amazonaws.com') {
+                    withKubeConfig(caCertificate: '', clusterName: 'devopsshack-cluster', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://9570DE9AC984BD41AF7C6419E8F49E84.gr7.us-east-1.eks.amazonaws.com') {
 						sh "kubectl apply -f pv-pvc.yml -n ${KUBE_NAMESPACE}"
 						sh "kubectl apply -f mysql-ds.yml -n ${KUBE_NAMESPACE}"
                         sh "kubectl apply -f ${deploymentFile} -n ${KUBE_NAMESPACE}"
@@ -107,7 +107,7 @@ stage('Switch Traffic') {
             def newEnv = params.DEPLOY_ENV
 
             // Always switch traffic based on DEPLOY_ENV
-            withKubeConfig(caCertificate: '', clusterName: 'devopsshack-cluster', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://46743932FDE6B34C74566F392E30CABA.gr7.ap-south-1.eks.amazonaws.com') {
+            withKubeConfig(caCertificate: '', clusterName: 'devopsshack-cluster', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://9570DE9AC984BD41AF7C6419E8F49E84.gr7.us-east-1.eks.amazonaws.com') {
                 sh '''
                     kubectl patch service app -p "{\\"spec\\": {\\"selector\\": {\\"app\\": \\"app\\", \\"version\\": \\"''' + newEnv + '''\\"}}}" -n ${KUBE_NAMESPACE}
                 '''
@@ -125,7 +125,7 @@ stage('Switch Traffic') {
             steps {
                 script {
                     def verifyEnv = params.DEPLOY_ENV
-                    withKubeConfig(caCertificate: '', clusterName: 'devopsshack-cluster', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://46743932FDE6B34C74566F392E30CABA.gr7.ap-south-1.eks.amazonaws.com') {
+                    withKubeConfig(caCertificate: '', clusterName: 'devopsshack-cluster', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://9570DE9AC984BD41AF7C6419E8F49E84.gr7.us-east-1.eks.amazonaws.com') {
                         sh """
                         kubectl get pods -l version=${verifyEnv} -n ${KUBE_NAMESPACE}
                         kubectl get svc app -n ${KUBE_NAMESPACE}
