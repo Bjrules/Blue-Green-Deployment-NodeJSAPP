@@ -117,6 +117,7 @@ kubectl apply -f secret-file.yaml -n webapps
 ```
 
 ```yaml
+
 apiVersion: v1
 kind: Secret
 metadata:
