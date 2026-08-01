@@ -7,5 +7,5 @@
 
 - Setup Jenkins and EKS on a Machine by installing : Jenkins, Trivy, Docker, AwSCLI & configure it, Terraform, Kubectl and Kubernetes using EKS-Terraform(See the RBAC setup instructions in the RBAC Directory also).
 
-- Setup Sonarqube Server also using: `docker run -d --name sonarqube -p 9000:9000 sonarqube:lts-community`
+- Setup Sonarqube Server also using Docker : `docker run -d --name sonarqube -p 9000:9000 sonarqube:lts-community`
 
