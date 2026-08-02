@@ -9,3 +9,5 @@
 
 - Setup Sonarqube Server also using Docker : `docker run -d --name sonarqube -p 9000:9000 sonarqube:lts-community`
 
+See Blue-Green Deployment part II project
+
