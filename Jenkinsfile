@@ -98,30 +98,32 @@ pipeline {
                 }
             }
         }
-stage('Switch Traffic') {
- when{
-    expression { return params.SWITCH_TRAFFIC }
- }
- steps {
-    script {
-        def newEnv = param.DEPLOY_ENV == 'blue' ? 'green' : 'blue'
-        def patchJson = """
-        {
-         "spec": {
-         "selector":{
-         "app": "app",
-         "version": "${newEnv}"
-                 }
-            }
-        }
-        """
- withKubeConfig(caCertificate: '', clusterName: 'bnj-cluster', contextName: '', credentialsId: 'K8s-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://9570DE9AC984BD41AF7C6419E8F49E84.gr7.us-east-1.eks.amazonaws.com') {
-  writeFile: 'patch.json', text: patchJson
-  sh "kubectl patch service app --app-file patch.json -n ${KUBE_NAMESPACE}"
+
+
+                stage('Switch Traffic') {
+                when{
+                    expression { return params.SWITCH_TRAFFIC }
                 }
-            }
-        }
-}
+                steps {
+                    script {
+                        def newEnv = param.DEPLOY_ENV == 'blue' ? 'green' : 'blue'
+                        def patchJson = """
+                        {
+                        "spec": {
+                        "selector":{
+                        "app": "app",
+                        "version": "${newEnv}"
+                                }
+                            }
+                        }
+                        """
+                withKubeConfig(caCertificate: '', clusterName: 'bnj-cluster', contextName: '', credentialsId: 'K8s-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://9570DE9AC984BD41AF7C6419E8F49E84.gr7.us-east-1.eks.amazonaws.com') {
+                writeFile: 'patch.json', text: patchJson
+                sh "kubectl patch service app --app-file patch.json -n ${KUBE_NAMESPACE}"
+                                }
+                            }
+                        }
+                }
 // stage('Switch Traffic') {
 //     when {
 //         expression { return params.SWITCH_TRAFFIC }
@@ -140,7 +142,6 @@ stage('Switch Traffic') {
 //         }
 //     }
 // }
-
 
         
         stage('Verify Deployment') {
