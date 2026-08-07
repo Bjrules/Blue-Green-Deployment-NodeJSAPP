@@ -124,6 +124,7 @@ pipeline {
                             }
                         }
                 }
+	//Switching Traffic
 // stage('Switch Traffic') {
 //     when {
 //         expression { return params.SWITCH_TRAFFIC }
