@@ -99,7 +99,7 @@ pipeline {
             }
         }
 
-
+//switching traffice
                 stage('Switch Traffic') {
                 when{
                     expression { return params.SWITCH_TRAFFIC }
