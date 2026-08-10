@@ -12,7 +12,7 @@ pipeline {
         TAG = "${params.DOCKER_TAG}"  // The image tag now comes from the parameter
         KUBE_NAMESPACE = 'webapps'
         SCANNER_HOME= tool 'sonar-scanner'
-      // To be used for java application
+      // To be used for java bank application since it works with jdk17
       //  JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
       //  PATH = "${JAVA_HOME}/bin:${env.PATH}"
     }
